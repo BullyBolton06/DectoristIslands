@@ -100,6 +100,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MoveCharacter"",
+                    ""type"": ""Value"",
+                    ""id"": ""0e8d37d8-eeee-48ff-ad04-e5dc9c269e41"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -133,6 +142,61 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""CameraZoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""85e20bb4-e127-4c71-9369-a3cc89e8462e"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCharacter"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""93d453fb-83a1-462d-b751-2b2c99689f97"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCharacter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""dc0e360b-743e-4a81-9d5a-8d45ab5a190e"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCharacter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""0d9b3e4d-bbaa-4d01-92fd-cf6df391d021"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCharacter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""d0d8553c-1e38-441b-8530-114cbf92f263"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCharacter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 }
@@ -205,6 +269,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         // Detecting
         m_Detecting = asset.FindActionMap("Detecting", throwIfNotFound: true);
         m_Detecting_CameraZoom = m_Detecting.FindAction("CameraZoom", throwIfNotFound: true);
+        m_Detecting_MoveCharacter = m_Detecting.FindAction("MoveCharacter", throwIfNotFound: true);
     }
 
     ~@PlayerInputs()
@@ -286,6 +351,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Detecting;
     private List<IDetectingActions> m_DetectingActionsCallbackInterfaces = new List<IDetectingActions>();
     private readonly InputAction m_Detecting_CameraZoom;
+    private readonly InputAction m_Detecting_MoveCharacter;
     /// <summary>
     /// Provides access to input actions defined in input action map "Detecting".
     /// </summary>
@@ -301,6 +367,10 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Detecting/CameraZoom".
         /// </summary>
         public InputAction @CameraZoom => m_Wrapper.m_Detecting_CameraZoom;
+        /// <summary>
+        /// Provides access to the underlying input action "Detecting/MoveCharacter".
+        /// </summary>
+        public InputAction @MoveCharacter => m_Wrapper.m_Detecting_MoveCharacter;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -330,6 +400,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @CameraZoom.started += instance.OnCameraZoom;
             @CameraZoom.performed += instance.OnCameraZoom;
             @CameraZoom.canceled += instance.OnCameraZoom;
+            @MoveCharacter.started += instance.OnMoveCharacter;
+            @MoveCharacter.performed += instance.OnMoveCharacter;
+            @MoveCharacter.canceled += instance.OnMoveCharacter;
         }
 
         /// <summary>
@@ -344,6 +417,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @CameraZoom.started -= instance.OnCameraZoom;
             @CameraZoom.performed -= instance.OnCameraZoom;
             @CameraZoom.canceled -= instance.OnCameraZoom;
+            @MoveCharacter.started -= instance.OnMoveCharacter;
+            @MoveCharacter.performed -= instance.OnMoveCharacter;
+            @MoveCharacter.canceled -= instance.OnMoveCharacter;
         }
 
         /// <summary>
@@ -456,5 +532,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCameraZoom(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MoveCharacter" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMoveCharacter(InputAction.CallbackContext context);
     }
 }
