@@ -623,6 +623,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
   playerSpeedMultiplier: 5
   playerRotateSpeed: 100
+  cameraAngleModifier: -45
 --- !u!143 &1581671730
 CharacterController:
   m_ObjectHideFlags: 0
